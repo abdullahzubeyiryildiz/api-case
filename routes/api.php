@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SpotifyController;
+use App\Http\Controllers\Api\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware(['auth:api'])->group(function(){
 
+Route::prefix('auth')->group(function () {
+    Route::post('/register', [AuthController::class,'register']);
+    Route::post('/login', [AuthController::class,'login']);
+});
+
+Route::middleware(['auth:api'])->group(function(){
+    Route::get('/auth/my-profile', [AuthController::class,'myProfile']);
+    Route::post('/auth/change/foto', [AuthController::class,'changeFoto']);
+
+
+    Route::prefix('spotify')->group(function () {
+        Route::get('/artist', [SpotifyController::class,'getArtistList']);
+        Route::get('/album', [SpotifyController::class,'getTracksList']);
+
+    });
 });
