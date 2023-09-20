@@ -2,78 +2,65 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use ImageUpload;
-use App\Models\User;
 
+use HttpResponses;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
+use App\Services\UserService;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
 
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function register(Request $request)
     {
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'phone' => 'required|string',
-                'password' => 'required|string|min:8|confirmed',
-            ]);
+        $user = $this->userService->register($request->all());
 
-            if ($validator->fails()) {
-                $response = ['error' => true, 'message' => $validator->errors()];
-                return api_response(__('Something went wrong.'), 400, $response);
-            }
+        if ($user) {
+            return api_response(__('Registration Created Successfully.'), HttpResponses::HTTP_OK, ['user' => $user]);
+        }
 
-            User::create([
-                'name'=>$request->name,
-                'email'=>$request->email,
-                'phone'=>$request->phone,
-                'password'=>Hash::make($request->password),
-            ]);
-
-            return api_response(__('Registration Created Successfully.'), 200);
+        return api_response(__('Something went wrong.'), HttpResponses::HTTP_UNAUTHORIZED);
     }
 
 
-    public function login(Request $request) {
-        $credentials = $request->only('email', 'password');
+    public function login(Request $request)
+    {
+        $user = $this->userService->login($request->all());
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+        if ($user) {
             $token = $user->createToken('api_case')->accessToken;
-
-            return api_response(__('Success Login'), 200, ['token' => $token]);
+            return api_response(__('Success Login'), HttpResponses::HTTP_OK, ['token' => $token,'user' => $user]);
         }
 
-        return api_response(__('Information is Incorrect'), 400);
+        return api_response(__('Information is Incorrect'), HttpResponses::HTTP_UNAUTHORIZED);
     }
 
 
     public function myProfile(Request $request){
-        $user = Auth::user();
-        return api_response(__('My Profile'), 200, ['user' => new UserResource($user)]);
+        $user = $this->userService->user();
+
+        return api_response(__('My Profile'), HttpResponses::HTTP_OK, ['user' => new UserResource($user)]);
     }
 
-    public function changeFoto(Request $request){
 
-        $user = User::find(auth()->user()->id);
+    public function updateUserImage(Request $request)
+    {
 
-        if($request->hasFile('image')) {
-            dosyasil($user->image);
-            $image = $request->file('image');
-            $dosyadi = 'profile_'.time();
-            $yukleKlasor = 'img/user/';
-            $resimurl = resimyukle($image,$dosyadi,$yukleKlasor);
-            $user->image = $resimurl;
-            $user->save();
+         $user =  $this->userService->updateUserImage(auth()->user()->id, $request->file('image'));
+
+        if ($user) {
+            return api_response(__('Updated Image'), HttpResponses::HTTP_OK, ['user' => new UserResource($user)]);
         }
 
-        return api_response(__('Change Foto'), 200, ['user' => new UserResource($user)]);
+        return api_response(__('Information is Incorrect'), HttpResponses::HTTP_UNAUTHORIZED);
     }
 }

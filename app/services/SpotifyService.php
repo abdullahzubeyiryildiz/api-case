@@ -10,7 +10,6 @@ class SpotifyService
 
     public function getAccessToken()
     {
-        // Spotify API'ye erişim token'ını almak için gerekli isteği yapın
         $client = new \GuzzleHttp\Client();
         $response = $client->post('https://accounts.spotify.com/api/token', [
             'form_params' => [
@@ -24,11 +23,11 @@ class SpotifyService
         return $data['access_token'];
     }
 
-    public function getArtistTracks($artistId)
+    public function getTracks($artistId)
     {
         $accessToken = $this->getAccessToken();
 
-        $url = $this->apiUrl . "/artists/{$artistId}/top-tracks?market=US";
+        $url = $this->apiUrl . "/tracks/tracks?market=ES";
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken,

@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->string('album_id')->nullable();
+            $table->integer('popularity')->nullable();
+            $table->integer('track_number')->nullable();
+            $table->string('uri')->nullable();
             $table->timestamps();
         });
     }
