@@ -18,4 +18,15 @@ class AlbumService
     }
 
 
+    public function getWith($artistID, $perPage, $searchGenre = null)
+    {
+        return $this->albumRepository->getWith($artistID, $perPage, $searchGenre);
+    }
+
+
+    public function getGenre($perPage, $searchGenre = null)
+    {
+        return $this->albumRepository->getGenre($perPage, $searchGenre);
+    }
+
 }

@@ -22,4 +22,9 @@ class Track extends Model
     {
         return $this->belongsTo(Album::class);
     }
+
+    public function gences()
+    {
+        return $this->hasMany(Genre::class);
+    }
 }

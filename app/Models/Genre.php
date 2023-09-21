@@ -16,4 +16,9 @@ class Genre extends Model
         'name',
     ];
 
+    public function track()
+    {
+        return $this->belongsTo(Track::class);
+    }
+
 }

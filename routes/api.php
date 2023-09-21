@@ -33,5 +33,9 @@ Route::middleware(['auth:api'])->group(function(){
 
 
     Route::get('artist/{artistID}/albums', [AlbumController::class, 'getAlbumsList']);
+    Route::get('artist/{artistID}/genres', [AlbumController::class, 'getGenreList']);
+
+
+
 
 });

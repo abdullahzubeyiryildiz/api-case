@@ -10,11 +10,25 @@ use App\Models\Artist;
 use App\Mail\MailTrack;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\AlbumResource;
 
 class WebTestController extends Controller
 {
     public function test(Request $request)
     {
+        $artistID = "9a2f63f1-f01a-468c-bd7f-dc15b2a40da9";
+
+        $query = Album::where('artist_id', $artistID)->with(['artist', 'tracks.gences']);
+        $searchGenre= "rap";
+        if ($searchGenre) {
+            $query->whereHas('tracks.gences', function ($q) use ($searchGenre) {
+               return $q->where('name', $searchGenre);
+            });
+        }
+        $perPage = 10;
+        $albums = $query->paginate($perPage);
+        return AlbumResource::collection($albums);
+
 
       /*  $mailData = [
             'name' => 'Track New',
