@@ -31,11 +31,7 @@ Route::middleware(['auth:api'])->group(function(){
         Route::post('/update/image', [AuthController::class,'updateUserImage']);
     });
 
-
     Route::get('artist/{artistID}/albums', [AlbumController::class, 'getAlbumsList']);
     Route::get('artist/{artistID}/genres', [AlbumController::class, 'getGenreList']);
-
-
-
 
 });

@@ -15,8 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->nullable();
             $table->uuid('album_id')->nullable();
-            $table->integer('popularity')->nullable();
-            $table->integer('track_number')->nullable();
             $table->string('uri')->nullable();
             $table->foreign('album_id')->references('id')->on('albums');
             $table->timestamps();

@@ -14,6 +14,7 @@ class Artist extends Model
     use HasUuids;
 
     protected $fillable = [
+        'id',
         'name',
     ];
 
@@ -21,6 +22,12 @@ class Artist extends Model
     public function albums()
     {
         return $this->hasMany(Album::class);
+    }
+
+
+    public function gences()
+    {
+        return $this->hasMany(Genre::class);
     }
 
 }

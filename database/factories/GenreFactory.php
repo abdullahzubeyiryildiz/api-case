@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Album;
 use App\Models\Track;
+use App\Models\Artist;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +24,7 @@ class GenreFactory extends Factory
         $randomIndex = array_rand($array);
 
         return [
-            'track_id' => Track::factory()->create()->id,
+            'artist_id' => Album::factory()->create()->artist_id,
             'name' => $array[$randomIndex],
         ];
     }

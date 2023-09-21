@@ -11,6 +11,7 @@ class Track extends Model
     use HasApiTokens, HasFactory;
     use HasUuids;
     protected $fillable = [
+        'id',
         'album_id',
         'name',
         'popularity',

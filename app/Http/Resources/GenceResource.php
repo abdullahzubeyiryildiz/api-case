@@ -16,8 +16,9 @@ class GenceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'track_id' => $this->track_id,
+            'artist_id' => $this->artist_id,
             'name' => $this->name,
+            'artist' => new ArtistResource($this->whenLoaded('artist')),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Album;
+use App\Models\Track;
 use App\Models\Artist;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,9 +22,13 @@ class AlbumFactory extends Factory
 
     public function definition(): array
     {
-        return [
+        $album = Album::inRandomOrder()->first();
+
+       return [
             'artist_id' => Artist::factory(),
             'name' => $this->faker->word,
+            'popularity' => $this->faker->numberBetween(1, 100),
         ];
+
     }
 }

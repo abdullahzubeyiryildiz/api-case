@@ -13,9 +13,11 @@ class Album extends Model
     use HasUuids;
 
     protected $fillable = [
+        'id',
         'artist_id',
         'name',
-        'total_tracks',
+        'popularity',
+        'track_number',
         'uri',
     ];
 
@@ -29,11 +31,4 @@ class Album extends Model
         return $this->hasMany(Track::class);
     }
 
-    public static function createWithTrack($track, $attributes)
-    {
-        $album = new Album($attributes);
-        $album->uuid = (string) Str::uuid();
-        $track->albums()->save($album);
-        return $album;
-    }
 }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('genres', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('track_id');
-            $table->foreign('track_id')->references('id')->on('tracks');
+            $table->uuid('artist_id');
+            $table->foreign('artist_id')->references('id')->on('artists');
             $table->string('name');
             $table->timestamps();
         });
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('genres', function (Blueprint $table) {
-            $table->dropForeign(['track_id']);
+            $table->dropForeign(['artist_id']);
         });
 
         Schema::dropIfExists('genres');

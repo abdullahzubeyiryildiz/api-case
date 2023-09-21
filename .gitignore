@@ -85,5 +85,5 @@ laravel-echo-server.lock
 package-lock.json
 resources/js/app.js
 resources/js/bootstrap.js
-
+storage/
 db/

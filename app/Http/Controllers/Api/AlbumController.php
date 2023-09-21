@@ -29,7 +29,7 @@ class AlbumController extends Controller
     public function getGenreList(Request $request, $artistID, $searchGenre = null)
     {
           $perPage = $request->query('per_page', 10);
-          $searchGenre = $request->genre ?? "arabesque";
+           $searchGenre = $request->genre ?? "arabesque";
 
         return  $this->albumService->getGenre($artistID, $perPage, $searchGenre);
     }

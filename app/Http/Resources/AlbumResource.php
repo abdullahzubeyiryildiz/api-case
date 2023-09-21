@@ -13,13 +13,14 @@ class AlbumResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray(Request $request)
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
             'artist_id' => $this->artist_id,
-            'total_tracks' => $this->total_tracks,
+            'popularity' => $this->popularity,
+            'track_number' => $this->total_number,
             'artist' => new ArtistResource($this->whenLoaded('artist')),
             'tracks' => TrackResource::collection($this->whenLoaded('tracks')),
         ];

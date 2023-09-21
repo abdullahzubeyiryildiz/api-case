@@ -12,13 +12,13 @@ class Genre extends Model
     use HasUuids;
 
     protected $fillable = [
-        'track_id',
+        'artist_id',
         'name',
     ];
 
-    public function track()
+    public function artist()
     {
-        return $this->belongsTo(Track::class);
+        return $this->belongsTo(Artist::class);
     }
 
 }

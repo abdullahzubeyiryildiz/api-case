@@ -21,13 +21,13 @@ class TrackFactory extends Factory
     public function definition()
     {
         $album = Album::inRandomOrder()->first();
+        $trackCount = Track::where('album_id', $album->id)->count();
+        $album->track_number = $trackCount+1;
+        $album->save();
 
-        $trackCount = Album::where('artist_id', $album->artist_id)->count();
         return [
             'album_id' => $album->id,
             'name' => $this->faker->word,
-            'popularity' => $this->faker->numberBetween(1, 100),
-            'track_number' => $trackCount,
             'uri' => $this->faker->url,
         ];
     }
