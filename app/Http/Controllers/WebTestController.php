@@ -23,7 +23,7 @@ class WebTestController extends Controller
      //   $query = Genre::where('artist_id', $artistID)->with('artist');
 
         $query = Genre::with('artist');
-        $searchGenre= "turkish trap";
+        $searchGenre= "rap";
         if ($searchGenre) {
             $query->where(function ($q) use ($searchGenre) {
                return $q->where('name', $searchGenre);

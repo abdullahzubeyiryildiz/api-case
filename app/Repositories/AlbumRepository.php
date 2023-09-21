@@ -6,6 +6,7 @@ use App\Models\Album;
 use App\Models\Genre;
 use App\Models\Artist;
 use App\Http\Resources\AlbumResource;
+use App\Http\Resources\GenceResource;
 
 class AlbumRepository
 {
@@ -27,12 +28,15 @@ class AlbumRepository
 
     public function getGenre($artistID, $perPage, $searchGenre = null)
     {
-        $query = Genre::where(function ($q) use ($searchGenre) {
-            return $q->where('name', '%'.$searchGenre.'%');
-         })->orderBy('created_at', 'desc')->with('artist');
-
+        $query = Genre::with('artist');
+        if ($searchGenre) {
+            $query->where(function ($q) use ($searchGenre) {
+               return $q->where('name', $searchGenre);
+            });
+        }
+        $perPage = 10;
         $albums = $query->paginate($perPage);
-        return $albums;
+        return GenceResource::collection($albums);
     }
 
 
