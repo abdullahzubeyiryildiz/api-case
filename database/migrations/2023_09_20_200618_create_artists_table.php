@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('artists', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }

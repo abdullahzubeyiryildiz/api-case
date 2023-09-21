@@ -12,7 +12,7 @@ class Genre extends Model
     use HasUuids;
 
     protected $fillable = [
-        'album_id',
+        'track_id',
         'name',
     ];
 

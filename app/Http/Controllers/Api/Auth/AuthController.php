@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -55,6 +56,13 @@ class AuthController extends Controller
     public function updateUserImage(Request $request)
     {
 
+        /*
+        $image = $request->file('image');
+        $fileName = time().$image->getClientOriginalName();
+        $imagePath = Storage::disk('s3')->put('images', $image, $fileName);
+        $imagePath = Storage::disk('s3')->url($imagePath);
+
+        return $imagePath; */
          $user =  $this->userService->updateUserImage(auth()->user()->id, $request->file('image'));
 
         if ($user) {

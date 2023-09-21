@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tracks', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->nullable();
-            $table->uuid('album_id');
+            $table->uuid('album_id')->nullable();
             $table->integer('popularity')->nullable();
             $table->integer('track_number')->nullable();
             $table->string('uri')->nullable();

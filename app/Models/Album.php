@@ -14,7 +14,6 @@ class Album extends Model
 
     protected $fillable = [
         'artist_id',
-        'track_id',
         'name',
         'total_tracks',
         'uri',
@@ -32,6 +31,9 @@ class Album extends Model
 
     public static function createWithTrack($track, $attributes)
     {
-        return $track->albums()->create($attributes);
+        $album = new Album($attributes);
+        $album->uuid = (string) Str::uuid();
+        $track->albums()->save($album);
+        return $album;
     }
 }

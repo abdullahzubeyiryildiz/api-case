@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Track;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +18,12 @@ class GenreFactory extends Factory
      */
     public function definition(): array
     {
+        $array = ['arabesque', 'rap', 'pop'];
+        $randomIndex = array_rand($array);
+
         return [
-            'album_id' => Track::factory()->create()->album_id,
-            'name' => $this->faker->word,
+            'track_id' => Track::factory()->create()->id,
+            'name' => $array[$randomIndex],
         ];
     }
 }

@@ -18,21 +18,8 @@ class Track extends Model
         'uri',
     ];
 
-    public function albums()
-    {
-        return $this->hasMany(Album::class);
-    }
-
     public function album()
     {
         return $this->belongsTo(Album::class);
-    }
-
-    public static function findOrCreateByName($name, $attributes)
-    {
-        return static::updateOrCreate(
-            ['name' => $name],
-            $attributes
-        );
     }
 }
