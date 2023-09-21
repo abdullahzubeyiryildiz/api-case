@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Passport\HasApiTokens;
 class Track extends Model
 {
-    use HasFactory;
-
-
+    use HasApiTokens, HasFactory;
+    use HasUuids;
     protected $fillable = [
+        'album_id',
         'name',
         'popularity',
         'track_number',
@@ -20,6 +21,11 @@ class Track extends Model
     public function albums()
     {
         return $this->hasMany(Album::class);
+    }
+
+    public function album()
+    {
+        return $this->belongsTo(Album::class);
     }
 
     public static function findOrCreateByName($name, $attributes)

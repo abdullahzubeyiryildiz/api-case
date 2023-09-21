@@ -12,7 +12,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('spotify:cron')->everyThirtyMinutes();
+
+
+        $schedule->call(function () {
+            app('App\Services\SpotifyCronService')->doSomething();
+        })->everySecond();
+
+
     }
 
     /**

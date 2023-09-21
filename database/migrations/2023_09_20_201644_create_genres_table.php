@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tracks', function (Blueprint $table) {
+        Schema::create('genres', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name')->nullable();
-            $table->string('album_id')->nullable();
-            $table->integer('popularity')->nullable();
-            $table->integer('track_number')->nullable();
-            $table->string('uri')->nullable();
+            $table->uuid('album_id');
+            $table->foreign('album_id')->references('id')->on('albums');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -25,8 +23,13 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
+
     public function down(): void
     {
-        Schema::dropIfExists('tracks');
+        Schema::table('genres', function (Blueprint $table) {
+            $table->dropForeign(['album_id']);
+        });
+
+        Schema::dropIfExists('genres');
     }
 };

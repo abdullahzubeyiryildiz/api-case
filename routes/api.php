@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\SpotifyController;
+use App\Http\Controllers\Api\AlbumController;
 use App\Http\Controllers\Api\Auth\AuthController;
 
 
@@ -32,8 +32,6 @@ Route::middleware(['auth:api'])->group(function(){
     });
 
 
-    Route::prefix('spotify')->group(function () {
-        Route::get('/artist', [SpotifyController::class,'getArtistList']);
-        Route::get('/album', [SpotifyController::class,'getTracksList']);
-    });
+    Route::get('artist/{artistID}/albums', [AlbumController::class, 'getAlbumsList']);
+
 });
