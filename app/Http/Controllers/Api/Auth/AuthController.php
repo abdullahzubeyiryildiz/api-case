@@ -73,13 +73,13 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return api_response(__('Validation error'), HttpResponses::HTTP_BAD_REQUEST, ['errors' => $validator->errors()]);
+            return apiResponse(__('Validation error'), HttpResponses::HTTP_BAD_REQUEST, ['errors' => $validator->errors()]);
         }
 
         $user = $this->userService->register($data);
 
         if ($user) {
-            return api_response(__('Registration Created Successfully.'), HttpResponses::HTTP_OK, ['user' => $user]);
+            return apiResponse(__('Registration Created Successfully.'), HttpResponses::HTTP_OK, ['user' => $user]);
         }
 
     }
@@ -133,10 +133,10 @@ class AuthController extends Controller
 
         if ($user) {
             $token = $user->createToken('api_case')->accessToken;
-            return api_response(__('Success Login'), HttpResponses::HTTP_OK, ['token' => $token,'user' => $user]);
+            return apiResponse(__('Success Login'), HttpResponses::HTTP_OK, ['token' => $token,'user' => $user]);
         }
 
-        return api_response(__('Information is Incorrect'), HttpResponses::HTTP_UNAUTHORIZED);
+        return apiResponse(__('Information is Incorrect'), HttpResponses::HTTP_UNAUTHORIZED);
     }
 
 /**
@@ -177,7 +177,7 @@ class AuthController extends Controller
     public function myProfile(){
         $user = $this->userService->user();
 
-        return api_response(__('My Profile'), HttpResponses::HTTP_OK, ['user' => new UserResource($user)]);
+        return apiResponse(__('My Profile'), HttpResponses::HTTP_OK, ['user' => new UserResource($user)]);
     }
 
 
@@ -231,9 +231,9 @@ class AuthController extends Controller
          $user =  $this->userService->updateUserImage(auth()->user()->id, $request->file('image'));
 
         if ($user) {
-            return api_response(__('Updated Image'), HttpResponses::HTTP_OK, ['user' => new UserResource($user)]);
+            return apiResponse(__('Updated Image'), HttpResponses::HTTP_OK, ['user' => new UserResource($user)]);
         }
 
-        return api_response(__('Information is Incorrect'), HttpResponses::HTTP_UNAUTHORIZED);
+        return apiResponse(__('Information is Incorrect'), HttpResponses::HTTP_UNAUTHORIZED);
     }
 }
