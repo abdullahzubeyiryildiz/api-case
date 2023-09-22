@@ -85,17 +85,5 @@ Description: Retrieve a paginated list of genres associated with a specific arti
 Cron Schedule: Every 30 minutes
 Command: php artisan php artisan spotify:cron
 Description: Run a cron job to check if the number of tracks for an artist has changed on Spotify. If a change is detected, send an email notification or log the change.
-API Guidelines
-RESTful API principles must be followed.
-Proper HTTP status codes should be used in responses.
-Eloquent Resources should be used for data transformation.
-Database tables should be created using migrations.
-Use UUID as primary keys for tables.
-Seed the tables using factories with a minimum of 2500 records.
-Implement pagination for lists of items.
-Document the API using Swagger or similar tools for easy reference.
-Ensure code readability and maintainability.
-Use any relevant packages or libraries for Spotify integration or API handling.
-This outline covers the key functionalities of the API based on your requirements. You can implement these endpoints and features in your Laravel application to create the desired API.
 ``` 
 
