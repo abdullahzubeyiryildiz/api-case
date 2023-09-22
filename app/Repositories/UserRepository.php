@@ -7,9 +7,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
+    protected $model;
+
+    public function __construct(User $model)
+    {
+        $this->model = $model;
+    }
+
     public function register($data)
     {
-        return User::create([
+        return $this->model->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
@@ -28,7 +35,7 @@ class UserRepository
 
     public function find($userId)
     {
-        return User::find($userId);
+        return $this->model->find($userId);
     }
 
     public function user()

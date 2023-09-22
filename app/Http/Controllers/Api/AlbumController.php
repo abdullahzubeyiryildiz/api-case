@@ -20,17 +20,16 @@ class AlbumController extends Controller
     public function getAlbumsList(Request $request, $artistID, $searchGenre = null)
     {
         $perPage = $request->query('per_page', 10);
-         $searchGenre = $request->genre ?? "arabesque";
+        $searchGenre = $request->query('genre', 'arabesque');
 
-        return  $this->albumService->getWith($artistID, $perPage, $searchGenre);
+        return $this->albumService->getAlbumsWithArtistAndTracks($artistID, $perPage, $searchGenre);
     }
-
 
     public function getGenreList(Request $request, $artistID, $searchGenre = null)
     {
-          $perPage = $request->query('per_page', 10);
-           $searchGenre = $request->genre ?? "arabesque";
+        $perPage = $request->query('per_page', 10);
+        $searchGenre = $request->query('genre', 'arabesque');
 
-        return  $this->albumService->getGenre($artistID, $perPage, $searchGenre);
+        return $this->albumService->getAlbumsByGenre($searchGenre, $perPage);
     }
 }

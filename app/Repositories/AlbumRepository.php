@@ -7,36 +7,40 @@ use App\Models\Genre;
 use App\Models\Artist;
 use App\Http\Resources\AlbumResource;
 use App\Http\Resources\GenceResource;
-
+use Illuminate\Database\Eloquent\Collection;
 class AlbumRepository
 {
+    protected $model;
 
-    public function getAlbums($artistID, $perPage)
+    public function __construct(Album $model)
     {
-        return Album::where('artist_id', $artistID)->paginate($perPage);
+        $this->model = $model;
     }
 
-
-    public function getWith($artistID, $perPage, $searchGenre = null)
+    public function getAll(): Collection
     {
-        $query = Album::where('artist_id', $artistID)->with(['artist.gences', 'tracks']);
-
-        $albums = $query->paginate($perPage);
-        return AlbumResource::collection($albums);
+        return $this->model->all();
     }
 
-
-    public function getGenre($artistID, $perPage, $searchGenre = null)
+    public function filterByArtist($artistID, $perPage): Collection
     {
-        $query = Genre::with('artist');
-        if ($searchGenre) {
-            $query->where(function ($q) use ($searchGenre) {
-               return $q->where('name', $searchGenre);
-            });
-        }
-        $perPage = 10;
-        $albums = $query->paginate($perPage);
-        return GenceResource::collection($albums);
+        return $this->model->where('artist_id', $artistID)->paginate($perPage);
+    }
+
+    public function filterByArtistAndLoadRelations($artistID, $perPage)
+    {
+        return $this->model->where('artist_id', $artistID)
+            ->with(['artist.gences', 'tracks'])
+            ->paginate($perPage);
+    }
+
+    public function filterByGenre($searchGenre, $perPage)
+    {
+        return Genre::with('artist')
+            ->when($searchGenre, function ($query) use ($searchGenre) {
+                $query->where('name', $searchGenre);
+            })
+            ->paginate($perPage);
     }
 
 

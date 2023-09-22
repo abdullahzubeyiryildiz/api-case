@@ -12,21 +12,24 @@ class AlbumService
         $this->albumRepository = $albumRepository;
     }
 
-    public function getAlbums($artistID, $perPage)
+    public function getAllAlbums()
     {
-        return $this->albumRepository->getAlbums($artistID, $perPage);
+        return $this->albumRepository->getAll();
     }
 
-
-    public function getWith($artistID, $perPage, $searchGenre = null)
+    public function getAlbumsByArtist($artistID, $perPage)
     {
-        return $this->albumRepository->getWith($artistID, $perPage, $searchGenre);
+        return $this->albumRepository->filterByArtist($artistID, $perPage);
     }
 
-
-    public function getGenre($perPage, $searchGenre = null)
+    public function getAlbumsWithArtistAndTracks($artistID, $perPage)
     {
-        return $this->albumRepository->getGenre($perPage, $searchGenre);
+        return $this->albumRepository->filterByArtistAndLoadRelations($artistID, $perPage);
+    }
+
+    public function getAlbumsByGenre($searchGenre, $perPage)
+    {
+        return $this->albumRepository->filterByGenre($searchGenre, $perPage);
     }
 
 }
