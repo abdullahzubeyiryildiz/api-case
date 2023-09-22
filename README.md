@@ -8,7 +8,9 @@
 -  php artisan passport:install   
 -  php artisan db:seed
 -  php artisan spotify:cron
--  php artisan l5-swagger:generate  
+-  php artisan l5-swagger:generate
+-  Documentation URL /api/documentation  
+
 
 ##  User Authentication
 ###  Register User
