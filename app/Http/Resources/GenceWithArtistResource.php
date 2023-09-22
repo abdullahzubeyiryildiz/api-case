@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ArtistResource extends JsonResource
+class GenceWithArtistResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,7 @@ class ArtistResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'gences' => GenceResource::collection($this->whenLoaded('gences')),
-            'albums' =>  $this->whenLoaded('albums'),
+            'albums' =>  GenceWithAlbumResource::collection($this->whenLoaded('albums')),
         ];
     }
 

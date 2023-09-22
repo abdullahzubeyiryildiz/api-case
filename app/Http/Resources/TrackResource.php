@@ -17,6 +17,7 @@ class TrackResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'artist_id'=> $this->artist_id,
             'album_id' => $this->album_id,
         ];
     }

@@ -8,16 +8,36 @@ use Illuminate\Routing\Controller as BaseController;
 
 use OpenApi\Attributes as OA;
 
- /**
- * @OA\Info(
- *      version="1.0.0",
- *      title="Api Case Documentation",
- *      description="L5 Swagger OpenApi description",
+
+
+   /**
+     * @OA\Info(
+     *      version="1.0.0",
+     *      title="Api Case Documentation",
+     *      description="Implementation of Swagger with in Laravel",
+     *      @OA\Contact(
+     *          email="pratikyazilimci@gmail.com"
+     *      ),
+     * )
+     * @OA\PathItem(path="/api")
+
+     *
+     *
+     */
+
+
+/**
+ * @OA\SecurityScheme(
+ *     type="apiKey",
+ *     in="header",
+ *     name="Authorization",
+ *     description="Bearer Token",
+ *     securityScheme="bearerAuth",
+ *     bearerFormat="JWT",
  * )
  */
-/**
- * @OA\PathItem(path="/api")
- */
+
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;

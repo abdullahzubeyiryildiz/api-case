@@ -78,19 +78,20 @@ class SpotifyCronService
         $spotifyAlbumTracks = Spotify::albumTracks($albumItem['id'])->get();
 
         foreach ($spotifyAlbumTracks['items'] as $albumTrack) {
-            $this->getOrCreateTrack($albumModel->id, $albumTrack);
+            $this->getOrCreateTrack($albumModel, $albumTrack);
         }
 
         $this->checkAndUpdateTotalTracks($albumModel, $albumItem);
     }
 
-    private function getOrCreateTrack($albumID, $albumTrack)
+    private function getOrCreateTrack($albumModel, $albumTrack)
     {
         return Track::firstOrCreate(['name' => $albumTrack['name'], 'id' => $albumTrack['id']], [
             'id' => $albumTrack['id'],
             'name' => $albumTrack['name'],
             'uri' => $albumTrack['uri'],
-            'album_id' => $albumID,
+            'artist_id' => $albumModel->artist_id,
+            'album_id' => $albumModel->id,
         ]);
     }
 

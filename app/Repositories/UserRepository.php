@@ -16,12 +16,19 @@ class UserRepository
 
     public function register($data)
     {
-        return $this->model->create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'password' => Hash::make($data['password']),
-        ]);
+        try {
+            return $this->model->create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'password' => Hash::make($data['password']),
+            ]);
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] == 1062) {
+                return response()->json(['error' => 'The email address is already in use.'], 400);
+            }
+            throw $e;
+        }
     }
 
     public function login($data)

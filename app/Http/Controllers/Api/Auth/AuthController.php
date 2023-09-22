@@ -10,6 +10,8 @@ use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+
 
 class AuthController extends Controller
 {
@@ -52,7 +54,7 @@ class AuthController extends Controller
  *     ),
  *     @OA\Response(
  *         response=200,
- *         description="Registration successful",
+ *         description="Registration Created Successfully.",
  *     ),
  *     @OA\Response(
  *         response=422,
@@ -62,13 +64,24 @@ class AuthController extends Controller
  */
     public function register(Request $request)
     {
-        $user = $this->userService->register($request->all());
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required',
+            'password' => 'required|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return api_response(__('Validation error'), HttpResponses::HTTP_BAD_REQUEST, ['errors' => $validator->errors()]);
+        }
+
+        $user = $this->userService->register($data);
 
         if ($user) {
             return api_response(__('Registration Created Successfully.'), HttpResponses::HTTP_OK, ['user' => $user]);
         }
 
-        return api_response(__('Something went wrong.'), HttpResponses::HTTP_UNAUTHORIZED);
     }
 
 
@@ -131,7 +144,7 @@ class AuthController extends Controller
  *     path="/api/user/my-profile",
  *     tags={"My Profile"},
  *     summary="Get user profile",
- *     security={{ "api_token": {} }},
+ *     security={{ "bearerAuth": {} }},
  *     @OA\Parameter(
  *         name="Authorization",
  *         in="header",
@@ -173,7 +186,7 @@ class AuthController extends Controller
  *     path="/api/user/update/image",
  *     tags={"My Profile"},
  *     summary="Update user profile image",
- *     security={{ "api_token": {} }},
+ *     security={{ "bearerAuth": {} }},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\MediaType(

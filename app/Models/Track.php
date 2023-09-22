@@ -12,6 +12,7 @@ class Track extends Model
     use HasUuids;
     protected $fillable = [
         'id',
+        'artist_id',
         'album_id',
         'name',
         'popularity',
@@ -24,8 +25,9 @@ class Track extends Model
         return $this->belongsTo(Album::class);
     }
 
-    public function gences()
+    public function artist()
     {
-        return $this->hasMany(Genre::class);
+        return $this->belongsTo(Artist::class);
     }
+
 }

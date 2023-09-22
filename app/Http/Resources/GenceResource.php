@@ -18,7 +18,22 @@ class GenceResource extends JsonResource
             'id' => $this->id,
             'artist_id' => $this->artist_id,
             'name' => $this->name,
-            'artist' => new ArtistResource($this->whenLoaded('artist')),
+            'artist' => new GenceWithArtistResource($this->whenLoaded('artist')),
+        ];
+    }
+
+    public function with($request)
+    {
+        return [
+            'meta' => [
+                'pagination' => [
+                    'total' => $this->collection->total(),
+                    'count' => $this->collection->count(),
+                    'per_page' => $this->collection->perPage(),
+                    'current_page' => $this->collection->currentPage(),
+                    'total_pages' => $this->collection->lastPage(),
+                ],
+            ],
         ];
     }
 }

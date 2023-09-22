@@ -26,6 +26,7 @@ class TrackFactory extends Factory
         $album->save();
 
         return [
+            'artist_id' => $album->artist_id,
             'album_id' => $album->id,
             'name' => $this->faker->word,
             'uri' => $this->faker->url,
