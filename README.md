@@ -5,6 +5,7 @@
 -  php artisan key:generate
 -  composer update
 -  php artisan migrate
+-  php artisan passport:install   
 -  php artisan db:seed
 -  php artisan spotify:cron
 -  php artisan l5-swagger:generate  
