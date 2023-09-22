@@ -26,17 +26,6 @@ use OpenApi\Attributes as OA;
      */
 
 
-/**
- * @OA\SecurityScheme(
- *     type="apiKey",
- *     in="header",
- *     name="Authorization",
- *     description="Bearer Token",
- *     securityScheme="bearerAuth",
- *     bearerFormat="JWT",
- * )
- */
-
 
 class Controller extends BaseController
 {
